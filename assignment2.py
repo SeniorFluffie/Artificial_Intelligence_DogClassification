@@ -1,4 +1,5 @@
 from naivebayesclassifier import NaiveBayesClassifier
+from fuzzyclassifier import FuzzyClassifier
 
 def naive_bayes_classifier(input):
   # empty input
@@ -16,8 +17,14 @@ def naive_bayes_classifier(input):
 
 
 def fuzzy_classifier(input):
-  # input is a three element list with [girth, height, weight]
-  girth, height, weight = input
+  # empty input
+  if (input is None or len(input) < 3):
+    raise Exception('input variable empty')
+
+  # calculate most likely class (using naive bayes)
+  fuzzy_classifier = FuzzyClassifier(input)
+  highest_membership_class = fuzzy_classifier.get_highest_membership_class()
+  class_memberships = fuzzy_classifier.get_class_memberships()
 
   # highest_membership_class is a string indicating the highest membership class, either "beagle", "corgi", "husky", or "poodle"
   # class_memberships is a four element list indicating the membership in each class in the order [beagle probability, corgi probability, husky probability, poodle probability]
@@ -32,3 +39,7 @@ if __name__ == "__main__":
   most_likely_class, class_probabilities = naive_bayes_classifier([65, 55, 30])
   print('Actual Output:   ', most_likely_class, ',', class_probabilities)
   print('Expected output: ', '"poodle",  [2.4342947465727013e-29, 7.511501676401435e-37, 0.2390117475045523, 0.7609882524954477]')
+  highest_membership_class, class_memberships = fuzzy_classifier([59, 32, 17])
+  print('Actual Output:   ', highest_membership_class, ',', class_memberships)
+  print('Expected output: ', '"corgi", [0.0, 0.5333333333333333, 0, 0.0]')
+  
