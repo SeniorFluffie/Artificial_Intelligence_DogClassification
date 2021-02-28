@@ -1,3 +1,5 @@
+from naivebayesclassifier import NaiveBayesClassifier
+
 def naive_bayes_classifier(input):
   # empty input
   if (input is None or len(input) < 3):
